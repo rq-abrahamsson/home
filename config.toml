@@ -1,0 +1,4 @@
+baseURL = "https://rq.abrahamsson.tech"
+languageCode = "en-us"
+title = "rq-abrahamsson"
+theme = "ananke"
