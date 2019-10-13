@@ -14,21 +14,19 @@
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
     {{ end }}
 
-    {{ $stylesheet := .Site.Data.webpack_assets.app }}
-    {{ with $stylesheet.css }}
-    <link href="{{ relURL (printf "%s%s" "dist/" .) }}" rel="stylesheet">
-    {{ end }}
+    {{ $style := resources.Get "sass/main.scss" | toCSS | minify | fingerprint "sha512"}}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
 
-    {{ range .Site.Params.custom_css }}
-    <link rel="stylesheet" href="{{ relURL ($.Site.BaseURL) }}{{ . }}">
-    {{ end }}
 
 </head>
 
 <body>
-    <main class="pb7" role="main">
+    {{ partial "header.html" . }}
+    <main>
         {{ block "main" . }}{{ end }}
     </main>
+    {{ $js := resources.Get "js/main.js" | minify | fingerprint "sha512" }}
+    <script type="text/javascript" src="{{ $js.Permalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 </body>
 
 </html>
