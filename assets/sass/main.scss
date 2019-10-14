@@ -20,4 +20,33 @@ main {
     align-items: center;
     background-color: $dark;
     color: $white;
+    box-shadow: 1px 1px 5px #888888;
+}
+
+.main-content {
+    max-width: 750px;
+}
+
+.main-description {
+    padding: 20px;
+    border-bottom: 1px solid $dark;
+}
+
+a {
+    text-decoration: none;
+    color: $dark;
+}
+
+.post {
+    h2 {
+        font-size: 1.2em;
+        margin-top: 5px;
+    }
+
+    border-radius: 25px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 20px;
+    border-left: 2px solid $dark;
+    border-right: 2px solid $dark;
 }

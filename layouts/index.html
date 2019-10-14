@@ -1,6 +1,8 @@
 {{ define "main" }}
-<article>
-    {{ .Content }}
+<article class="main-content">
+    <div class="main-description">
+        {{ .Content }}
+    </div>
     {{ $mainSections := .Site.Params.mainSections | default (slice "posts") }}
     {{/* Create a variable with that section to use in multiple places. */}}
     {{ $section := where .Site.RegularPages "Section" "in" $mainSections }}
@@ -10,7 +12,7 @@
     {{ $n_posts := $.Param "recent_posts_number" | default 3 }}
 
     {{ range (first $n_posts $section) }}
-    <div>
+    <div class="post">
         {{ partial "post-summary.html" . }}
     </div>
     {{ end }}

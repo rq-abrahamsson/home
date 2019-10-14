@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{{ block "title" . }}{{ .Site.Title }} {{ with .Params.Title }} | {{ . }}{{ end }}{{ end }}</title>
+    <title>{{ .Site.Title }}</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     {{ hugo.Generator }}
     {{/* NOTE: For Production make sure you add `HUGO_ENV="production"` before your build command */}}
@@ -16,7 +16,6 @@
 
     {{ $style := resources.Get "sass/main.scss" | toCSS | minify | fingerprint "sha512"}}
     <link rel="stylesheet" href="{{ $style.Permalink }}">
-
 
 </head>
 
