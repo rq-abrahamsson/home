@@ -17,6 +17,9 @@ collections:
       - label: "Title"
         name: "title"
         widget: "string"
+      - label: "Lead"
+        name: "lead"
+        widget: "string"
       - label: "Publish Date"
         name: "date"
         required: false
