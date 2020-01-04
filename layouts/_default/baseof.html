@@ -15,6 +15,7 @@
     {{ end }}
 
     {{ $style := resources.Get "sass/main.scss" | toCSS | minify | fingerprint "sha512"}}
+    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ $style.Permalink }}">
 
 </head>

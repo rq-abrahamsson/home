@@ -1,9 +1,16 @@
-$dark: #454545;
-$white: #fefefe;
+$gray: #454545;
+
+$lightest: #f2fffe;
+$light: #ccecec;
+$middle: #a7e3e3;
+$dark: #62b6ad;
+// $darkest: #77bcb9;
+$darkest: #576c69;
 
 body {
-    background-color: $white;
-    color: $dark;
+    background-color: $light;
+    font-family: 'Merriweather', serif;
+    color: $darkest;
     margin: 0;
     padding: 0;
 }
@@ -16,11 +23,34 @@ main {
 
 .header-content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    background-color: $dark;
-    color: $white;
+    background-color: $gray;
+    color: $lightest;
     box-shadow: 1px 1px 5px #888888;
+}
+
+
+.left-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: space-around;
+}
+
+.right-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: space-around;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .main-content {
@@ -29,12 +59,12 @@ main {
 
 .main-description {
     padding: 20px;
-    border-bottom: 1px solid $dark;
+    border-bottom: 1px solid $middle;
 }
 
 a {
     text-decoration: none;
-    color: $dark;
+    color: $darkest;
 }
 
 .post {
@@ -47,6 +77,6 @@ a {
     margin-top: 20px;
     margin-bottom: 10px;
     padding: 20px;
-    border-left: 2px solid $dark;
-    border-right: 2px solid $dark;
+    border-left: 2px solid $middle;
+    border-right: 2px solid $middle;
 }
