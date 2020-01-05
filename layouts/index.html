@@ -11,10 +11,8 @@
 
     {{ $n_posts := $.Param "recent_posts_number" | default 3 }}
 
-    {{ range (first $n_posts $section) }}
-    <div class="post">
-        {{ partial "post-summary.html" . }}
-    </div>
+    {{ range $section }}
+    {{ partial "post-summary.html" . }}
     {{ end }}
 
 </article>

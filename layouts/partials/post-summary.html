@@ -1,13 +1,14 @@
-<article>
-    <div>
-        <h2>
-            <a href="{{.URL}}">
+<article class="post-summary-wrapper">
+    <a href="{{.URL}}">
+        <div class="post-summary">
+            <h2>
                 {{ .Title }}
-            </a>
-        </h2>
-        <div>
-            {{ .Summary }}
+            </h2>
+            <div>
+                {{ .Summary }}
+            </div>
+            <!-- <a href="{{.URL}}">Read more</a> -->
         </div>
-        <!-- <a href="{{.URL}}">Read more</a> -->
-    </div>
+
+    </a>
 </article>

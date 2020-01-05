@@ -1,6 +1,7 @@
 $gray: #454545;
 
 $lightest: #f2fffe;
+$lighter: #dcf9f9;
 $light: #ccecec;
 $middle: #a7e3e3;
 $dark: #62b6ad;
@@ -67,16 +68,22 @@ a {
     color: $darkest;
 }
 
-.post {
+.post-summary-wrapper {
     h2 {
         font-size: 1.2em;
         margin-top: 5px;
     }
 
+    background-color: $light;
+    box-shadow: -2px -2px 9px 2px $middle;
+    border-radius: 25px;
+}
+
+
+.post-summary {
+    box-shadow: 2px 2px 9px 2px $lighter;
     border-radius: 25px;
     margin-top: 20px;
     margin-bottom: 10px;
     padding: 20px;
-    border-left: 2px solid $middle;
-    border-right: 2px solid $middle;
 }
