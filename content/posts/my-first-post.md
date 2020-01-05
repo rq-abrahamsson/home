@@ -1,6 +1,13 @@
 ---
-title: My First Post
-date: 2019-10-12T12:54:01.000Z
+title: This is the first
+summary: The site is starting to get somewhere
+date: '2020-01-04T00:54:01+01:00'
 draft: false
 ---
-It's a test
+
+
+Techniques
+
+Hugo, Netlify and Netlify CMS
+
+https://thebestmotherfucking.website/
