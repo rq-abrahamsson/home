@@ -10,4 +10,4 @@ Techniques
 * Netlify
 * Netlify CMS
 
-https://thebestmotherfucking.website/
+[thebestmotherfucking.website](thebestmotherfucking.website)
