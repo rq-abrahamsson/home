@@ -16,6 +16,12 @@ body {
     padding: 0;
 }
 
+
+a {
+    text-decoration: none;
+    color: $darkest;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -23,6 +29,10 @@ main {
 }
 
 .header-content {
+    a {
+        color: $lightest;
+    }
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -63,9 +73,9 @@ main {
     border-bottom: 1px solid $middle;
 }
 
-a {
-    text-decoration: none;
-    color: $darkest;
+.blog-post {
+    margin-top: 50px;
+    max-width: 600px;
 }
 
 .post-summary-wrapper {
