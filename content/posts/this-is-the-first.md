@@ -6,6 +6,8 @@ draft: true
 ---
 Techniques
 
-Hugo, Netlify and Netlify CMS
+* Hugo
+* Netlify
+* Netlify CMS
 
-https://thebestmotherfucking.website/
+[thebestmotherfucking.website](http://thebestmotherfucking.website)
