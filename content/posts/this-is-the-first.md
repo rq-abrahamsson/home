@@ -1,7 +1,7 @@
 ---
 title: This is the first
 summary: "It is now possible to create and read blog posts \U0001F389"
-date: '2020-01-05T20:07:56+01:00'
+date: 2020-01-06T18:30:00.000Z
 draft: false
 ---
 Finally I can say that my blog is good enough to start writing posts. A really exiting start of a new year and decade. 🎉
