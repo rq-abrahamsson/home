@@ -67,5 +67,5 @@ This code in turn helped me find a bug that was in the game and would have been 
 
 
 
-During the same time I created this test I had another really annoying bug that crashed the game every once in a while and it was really hard to find out what was happening. So to fix it a used the Elixir Supervisor mindset where you crash and recover when something is bad. So I started to save the state after every command was run and if something went wrong I just read in the good old state. So I though everything was fine until it chashed again. Could not believe my eyes. But thanks to the property based tests I saw a lot of nil values generated in an array with cards marked as done which caught my attention.
+During the same time I created this test I had another really annoying bug that crashed the game every once in a while and it was really hard to find out what was happening. So to fix it a used the Elixir Supervisor mindset where you crash and recover when something is bad. So I started to save the state after every command was run and if something went wrong I just read in the good old state. So I though everything was fine until it crashed again. Could not believe my eyes. But thanks to the property based tests I saw a lot of nil values generated in an array with cards marked as done which caught my attention.
 
