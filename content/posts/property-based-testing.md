@@ -7,7 +7,7 @@ date: 2020-01-06T18:30:31.937Z
 draft: true
 ---
 -- Maybe mention some other names of it here too
-I have read a bit about and watched some talks about Property based testing and I have been really facinated about it but only seen some expamles that shows math properties like addition and subtraction. Now when I had my first rather large own project that I had put a bit of time into it seemed like a perfect time to try it out for real.
+I have read a bit about and watched some talks about Property based testing and I have been really fascinated about it but only seen some expamles that shows math properties like addition and subtraction. Now when I had my first rather large own project that I had put a bit of time into it seemed like a perfect time to try it out for real.
 
 The project I mention is the drinking game [Giving Game](https://giving-game.se) which is built using Elm in the frontend and Elixir with Phoenix and Channels (abstractions over Web Sockets). It is a turn based card game where you can put card in your hand and play the cards on other players. Every action a player makes in the game is a command that gets sent to the Elixir backend. I started by trying to create a Property test for the frontend using the [elm-test](https://package.elm-lang.org/packages/elm-explorations/test/latest) library which does a good work explaining strategies on how to write good tests. But I could not find any good place where it would fit so instead I looked at the backend and the library [Stream data](https://hexdocs.pm/stream_data/StreamData.html)([Release notes StreamData](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/))
 
@@ -61,12 +61,11 @@ property "Random commands will keep the game valid" do
     end
 end
 ```
-So what happens here? A list of all possible commads in the game are created - command_list - then a game with two players are setup and started. After that every command is applied on the game and lastly there are some validators to check that the game is still in a valid state.
+So what happens here? A list of all possible commands in the game are created - command_list - then a game with two players are setup and started. After that every command is applied on the game and lastly there are some validators to check that the game is still in a valid state.
 
 This code in turn helped me find a bug that was in the game and would have been really hard to find on its own and as a reference when running this test there was at least 30 successful runs every time before the test failed. The assert that was failing was the "with_more_than_20_points_it_should_be_end_game". The reason this happened was that at the time there were two ways to get points in the game, through a card type called Give card and a type called Chance card and only Give card implemented a check if the game reached 20 points so it could be put in the end game state. And as you can guess the Chance cards does not give points every time so its pretty hard to win with that card. So finding this bug and reproducing it manually would have been really hard. Now it was easy to find and then the fix was only to move the check to after every time a player have been picked for a card.
 
 
 
-During the same time I created this test I had another really annoying bug that crached the game every once in a while and it was really hard to find out what was happening. So to fix it a used the Elixir Supervisor mindset where you crash and recover when something is bad. So I started to save the state after every command was run and if something went wrong I just read in the good old state. So I though everything was fine until it chashed again. Could not believe my eyes. But thanks to the property based tests I saw a lot of nil values generated in an array with cards marked as done which caught my attention.
+During the same time I created this test I had another really annoying bug that crashed the game every once in a while and it was really hard to find out what was happening. So to fix it a used the Elixir Supervisor mindset where you crash and recover when something is bad. So I started to save the state after every command was run and if something went wrong I just read in the good old state. So I though everything was fine until it chashed again. Could not believe my eyes. But thanks to the property based tests I saw a lot of nil values generated in an array with cards marked as done which caught my attention.
 
-test helped me catching another bug that was a bit more annyoing
