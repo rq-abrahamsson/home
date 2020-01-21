@@ -1,16 +1,17 @@
 ---
 title: How I used Property Based Testing in one of my projects
 summary: >-
-  This is the story about how I found a bug - or two - with Property Based Testing while
-  still not sure how to best utilize it.
+  This is the story about how I found a bug - or two - with Property Based
+  Testing while still not sure how to best utilize it.
 date: 2020-01-06T18:30:31.937Z
 draft: true
 ---
-
-Many of you might ask - what is property based testing? - and i will give a short introduction but if you want to learn more I would recommend reading [this article](https://fsharpforfunandprofit.com/posts/property-based-testing/) by [Scott Wlaschin](https://twitter.com/ScottWlaschin) that have written a lot of good articles about F#, Functional Programming and Domain Modeling.
+Many of you might ask "What is property based testing?" and i will give a short introduction but if you want to learn more I would recommend reading [this article](https://fsharpforfunandprofit.com/posts/property-based-testing/) by [Scott Wlaschin](https://twitter.com/ScottWlaschin). I really recommend reading other articles he has written on that page if you would like to know more about F#, Functional Programming and Domain Modeling.
 
 ## So what is Property Based Testing?
-Some other names you could hear that are are more or less the same thing are Fuzz-test, Quickcheck. So what are the properties you might ask, a really good example of properties you can find in math and more specific addition and you can see an [example using F#](https://fsharpforfunandprofit.com/posts/property-based-testing/#using-fscheck-to-test-the-addition-properties) and my attempt create a test for addition in Elixir:
+
+It is a specific technique of testing your code which also goes by the names Fuzz-test and Quickcheck. So why is it called Property based testing? It is of course becasue we test properties of functions. That might not be very helpful but we can find a really good example of properties in math and more specificly addition. In the article mentioned previously you can find an [example using F#](https://fsharpforfunandprofit.com/posts/property-based-testing/#using-fscheck-to-test-the-addition-properties). Below is my attempt create tests for the same properties of addition in Elixir:
+
 ```
 defmodule Addition do
   use ExUnit.Case, async: true
@@ -48,17 +49,20 @@ defmodule Addition do
   end
 end
 ```
-So what you can see here is `StreamData.integer()` which is called a Fuzzer and that generates the input to the property test. Then the generated variables is used to test the properties and if a test with the generated numbers fail you will see what input was used to trigger that fail. Usually you have a more complex input like a list to your test and then it could be possible to get really large data that is hard to reason about which is why you usually would like to create something called a Shrinker. The Shrinker is used as a way to try and decrease the size and find the minimum sized input that still triggers an error.
+
+So what you can see here is `StreamData.integer()` which is a *Fuzzer* that is used to generates the input to the property test. Then the generated variables is used to test the properties and if a test with the generated numbers fail you will see what input was used to trigger that fail. Usually you have more complex inputs to your tests like nested objects and lists with a lot of data that is hard to reason about. This is why you usually would like to create something called a Shrinker. The Shrinker is used as a way to try and decrease the size and find the minimum sized input that still triggers an error which makes it easier to reason about what about the data that actually made it trigger an error.
 
 ## How I added Property Based testing to my project
-I have read a bit about and watched some talks about Property Based Testing and I have been really fascinated about it but only seen really small math/made up examples. 
-For the last year I have for the first time put in a lot of time into a single project and watched grow quite large. Therefore it seemed like a perfect time to try it out for real.
+
+I did read a about and watched some talks about Property Based Testing and not really trying it out even though I have been really fascinated about it. Also all examples I have seen have been really small math/made up examples. This really inspired me and now - when I during the the last year for the first time have put a lot of time and effort into a single project and watched grow quite large - it seemed like a perfect time to try it out for real.
 
 ### About the project
-The project I mention is the drinking game [Giving Game](https://giving-game.se) which is built using Elm in the frontend and Elixir with Phoenix and Channels (abstractions over Web Sockets). It is a turn based card game where you can pick up cards, put them in your hand and play the cards on other players. Every action a player makes in the game is a command that gets sent to the Elixir backend. I started by trying to create a Property test for the frontend using the [elm-test](https://package.elm-lang.org/packages/elm-explorations/test/latest) library which does a good work explaining strategies on how to write good tests - which I really recommend reading. But I could not find any good place where it would fit so instead I looked at the backend and the library [Stream data](https://hexdocs.pm/stream_data/StreamData.html) ([Release notes StreamData](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/)) which is an Elixir implementation of Property Based Testing - which was also used in the first example.
+
+The project I mention is the drinking game [Giving Game](https://giving-game.se) which is built using Elm in the frontend and Elixir with Phoenix and Channels (abstractions over Web Sockets). It is a turn based card game where you can pick up cards, put them in your hand and play the cards on other players. Every action a player makes in the game is a command that gets sent to the Elixir backend. I started by trying to create a Property test for the frontend using the [elm-test](https://package.elm-lang.org/packages/elm-explorations/test/latest) library which does a good work explaining strategies on how to write good tests - which I really recommend reading. But I could not find any good place where it would fit so instead I looked at the backend and the library [Stream data](https://hexdocs.pm/stream_data/StreamData.html) ([Release post](https://elixir-lang.org/blog/2017/10/31/stream-data-property-based-testing-and-data-generation-for-elixir/)) which is an Elixir implementation of Property Based Testing that you can see in use in the first example.
 
 ### The code
-The backend consist of a game state representing the current state of the game. One thing that I have not been doing a very good job with in the backend is to [make impossible states unrepresentable](https://www.youtube.com/watch?v=IcgmSRJHu_8) as suggested by the elm-test library. Another thing I hade done good was making each command from the fronted be a pure function that receives the game state, and some extra data and produces the next game state. This made it possible to create some code similar to this - that validates properties of the whole game:
+
+The backend consist of a game state representing the current state of the game. One thing that I have not been doing a very good job with in the backend is to [make impossible states unrepresentable](https://www.youtube.com/watch?v=IcgmSRJHu_8) as suggested by the elm-test library. On the other hand I had done good job making each command from the fronted be a pure function that receives the game state and some extra data which in turn produces the next game state. With these properties on the code there was a need to make sure the game state could not get in a bad state. In turn by having only the pure functions operate on the game state property based testing could be used to test all the possible states that could come from those functions applied. With this I created some code similar to this - that validates some properties of the game after playing 3000 rounds:
 
 ```
 property "Random commands will keep the game valid" do
@@ -108,15 +112,19 @@ property "Random commands will keep the game valid" do
     end
 end
 ```
+
 So what happens here? A list of all possible commands in the game are created - command_list - then a game with two players are setup and started. After that every command is applied on the game using a reduce and lastly there are some validators to check that the game is still in a valid state.
 
 ### Finding the bug
+
 This code in turn helped me find a bug that was in the game and would have been really hard to find on its own. As a reference for how hard it would have been when running this test there was at least 30 successful runs every time before the test failed. The failing assert was the "with_more_than_20_points_it_should_be_end_game". The reason this happened was that at that point in time there were two ways to get points in the game, through a card type called Give Card and a type called Chance Card. Of those types only Give Card implemented a check if someone had reached 20 points and in turn be able to put the game in an End Game state. And as might have guessed the Chance Cards does not give points every time so its pretty hard to win with that card. Therefore finding this bug and reproducing it manually would have been a bit painful. But now it was instead really easy to find the bug and what was causing it. Then the fix was only to move the check be in place where it could do the check after every time a card had affected a player.
 
 ## Finding another bug
+
 During the same time that I created this test I had another really annoying bug that made the game crash every once in a while and I had a real hard time locating and and finding out what was happening. So to fix the problem without finding the bug I used the Elixir Supervisor mindset where you fail fast and recover when something is bad. So I started to save the game state after every command was run and if something went wrong I just read in the good old state. I felt confident that it would work I though everything was fine until it crashed again. That felt really strange and I could hardly believe it. But thanks to the Property Based Tests I saw a lot of nil values generated in an array with cards marked as done which caught my attention. So I did set up a validation for the game that did not allow nil values in that array and went looking in the only places that was touching that array and how it could have started to produce nil values and the only way I was when the array was empty and it should not have been possible to run the command when the array was empty so I was a bit confounded until I realized that it had to be that the frontend had not got an update and still showed card from the array in the UI which made the player try to press the button again and in turn making the game crash. The fix was simple but finding it was hard and would have been even harder without the Property Based Tests.
 
 ## Summary
+
 I am not completely sure I have used the technique in the way it was though of by having this large state and only testing the correctness of parts of it. Also not using a shrinker is probably not a good way to move forward but I have not felt the need for one yet and have not been completely sure on how to do it. But the investment to try it out have already payed of and helped me a lot so I really recommend trying it out because it forces you to think about the testing of your application in a completely different way.
 
 Thanks for reading this far, hope you enjoyed it.
