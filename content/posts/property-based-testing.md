@@ -4,7 +4,7 @@ summary: >-
   This is the story about how I found a bug - or two - with Property Based
   Testing while still not sure how to best utilize it.
 date: 2020-01-21T20:27:31.937Z
-draft: true
+draft: false
 ---
 Many of you might ask "What is property based testing?" and i will give a short introduction but if you want to learn more I would recommend reading [this article](https://fsharpforfunandprofit.com/posts/property-based-testing/) by [Scott Wlaschin](https://twitter.com/ScottWlaschin). I really recommend reading other articles he has written on that page if you would like to know more about F#, Functional Programming and Domain Modeling.
 
