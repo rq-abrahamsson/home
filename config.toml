@@ -2,3 +2,8 @@ baseURL = "https://abrahamsson.tech"
 languageCode = "en-us"
 title = "rq-abrahamsson"
 #theme = "ananke"
+copyright = "This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License."
+
+enableRobotsTXT = true
+[author]
+    name = "Robin Abrahamsson"
