@@ -4,15 +4,9 @@ summary: e
 date: 2020-04-15T19:41:11.132Z
 draft: true
 ---
-
-
 Include ThenInclude
 
 https://github.com/dotnet/efcore/issues/6560#issuecomment-369232908
-
-
-
-
 
 Pass functions from linq-expressions
 
@@ -35,11 +29,14 @@ Pass functions from linq-expressions
              | Sorting.Descending -> fun (orders : IQueryable<Models.Car>) (f : Expressions.Expression<Func<Models.Car, obj>>)
                                         -> System.Linq.Queryable.OrderByDescending(orders, f)
          sortField sortParams orders sortFunction
-
 ```
-
-
 
 F# null and Nullable
 
 https://fsharpforfunandprofit.com/posts/the-option-type/#option-vs-null-vs-nullable
+
+
+
+
+
+printf with %A
